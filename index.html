@@ -1,1 +1,246 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Special Puzzle</title>
+
+<!-- FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+height:100vh;
+font-family:Arial;
+display:flex;
+justify-content:center;
+align-items:center;
+flex-direction:column;
+background:url("background.jpg") no-repeat center/cover;
+overflow:hidden;
+color:white;
+}
+
+/* TIÊU ĐỀ */
+
+.title{
+font-family:'Dancing Script', cursive;
+position:absolute;
+top:40px;
+left:50%;
+transform:translateX(-50%);
+font-size:70px;
+text-align:center;
+color:white;
+
+text-shadow:
+0 0 8px #ffb6c9,
+0 0 18px #ff8fb1,
+0 0 30px #ff6f9f;
+}
+
+/* SUBTITLE */
+
+.subtitle{
+position:absolute;
+top:140px;
+left:50%;
+transform:translateX(-50%);
+font-size:22px;
+font-style:italic;
+text-align:center;
+
+text-shadow:0 0 10px rgba(255,255,255,0.7);
+}
+
+/* HỘP CÂU HỎI */
+
+.box{
+background:rgba(0,0,0,0.65);
+padding:40px;
+border-radius:18px;
+text-align:center;
+width:320px;
+}
+
+.box h2{
+margin-bottom:20px;
+}
+
+input{
+padding:12px;
+width:220px;
+border-radius:8px;
+border:none;
+margin-bottom:20px;
+}
+
+button{
+padding:12px 26px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+background:#ff6f9f;
+color:white;
+font-weight:bold;
+}
+
+button:hover{
+background:#ff4f87;
+}
+
+/* TIM BAY */
+
+.heart{
+position:absolute;
+bottom:-50px;
+font-size:24px;
+animation:floatUp 6s linear infinite;
+opacity:0.8;
+}
+
+@keyframes floatUp{
+
+0%{
+transform:translateY(0);
+opacity:0;
+}
+
+20%{
+opacity:1;
+}
+
+100%{
+transform:translateY(-110vh);
+opacity:0;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="title" id="title"></div>
+
+<div class="subtitle">
+A few questions, a few memories, and a little surprise waiting.
+</div>
+
+<div class="box">
+
+<h2 id="question">Question 1</h2>
+
+<input id="answer" placeholder="Your answer">
+
+<br>
+
+<button onclick="check()">Submit</button>
+
+</div>
+
+<script>
+
+/* TYPEWRITER TITLE */
+
+const text = "A Puzzle Made Just For You";
+let i = 0;
+
+function typeWriter(){
+
+if(i < text.length){
+document.getElementById("title").innerHTML += text.charAt(i);
+i++;
+setTimeout(typeWriter,80);
+}
+
+}
+
+typeWriter();
+
+/* QUESTIONS */
+
+const questions = [
+
+{
+q:"Where did we first meet?",
+a:""
+},
+
+{
+q:"What is my favorite thing about you?",
+a:""
+},
+
+{
+q:"What color reminds you of me?",
+a:""
+}
+
+];
+
+let current = 0;
+
+function check(){
+
+let input = document.getElementById("answer").value.toLowerCase();
+
+if(input === questions[current].a){
+
+current++;
+
+if(current >= questions.length){
+
+alert("You unlocked the surprise ❤️");
+
+}else{
+
+document.getElementById("question").innerText = questions[current].q;
+document.getElementById("answer").value = "";
+
+}
+
+}else{
+
+alert("Try again ❤️");
+
+}
+
+}
+
+/* TIM BAY */
+
+function createHeart(){
+
+const heart = document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤";
+
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(20+Math.random()*20)+"px";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>{
+
+heart.remove();
+
+},6000);
+
+}
+
+setInterval(createHeart,500);
+
+</script>
+
+</body>
+</html>
