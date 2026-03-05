@@ -24,7 +24,6 @@ background-position:center;
 overflow:hidden;
 }
 
-/* TIÊU ĐỀ */
 
 .title{
 font-family:'Dancing Script', cursive;
