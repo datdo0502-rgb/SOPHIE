@@ -1,145 +1,151 @@
 <!DOCTYPE html>
-<html>
+<html lang="vi">
 <head>
 <meta charset="UTF-8">
-<title>Mini Game 8/3</title>
+<title>Trò Chơi Bí Mật</title>
 
 <style>
 body{
-font-family: Arial;
-background:#ffe6f0;
-text-align:center;
-padding-top:80px;
+    margin:0;
+    padding:0;
+    font-family: Arial, sans-serif;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background-image:url("background.jpg");
+    background-size:cover;
+    background-position:center;
 }
 
 .box{
-display:none;
-}
-
-.card{
-display:none;
-background:white;
-border-radius:12px;
-padding:20px;
-width:320px;
-margin:auto;
-box-shadow:0 4px 10px rgba(0,0,0,0.2);
-}
-
-button{
-padding:8px 15px;
-border:none;
-background:#ff4da6;
-color:white;
-border-radius:6px;
-cursor:pointer;
+    background:rgba(0,0,0,0.65);
+    padding:40px;
+    border-radius:15px;
+    text-align:center;
+    color:white;
+    width:400px;
 }
 
 input{
-padding:6px;
-margin-top:10px;
+    padding:10px;
+    width:80%;
+    border-radius:8px;
+    border:none;
+    margin-top:15px;
+}
+
+button{
+    margin-top:15px;
+    padding:10px 20px;
+    border:none;
+    border-radius:8px;
+    background:#ff6fa5;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#ff4f90;
+}
+
+#message{
+    margin-top:15px;
+    color:#ffb3d1;
 }
 </style>
-
 </head>
 
 <body>
 
-<h2>Mini game dành riêng cho em 💗</h2>
-<p>Nhân dịp 8/3 hãy xem anh hiểu em tới đâu nhé</p>
+<div class="box">
 
-<div id="start">
-<button onclick="start()">Bắt đầu</button>
-</div>
+<h2 id="question">Câu hỏi sẽ hiện ở đây</h2>
 
-<div id="q1" class="box">
-<p>Câu 1: Chúng ta quen nhau vào tháng mấy?</p>
-<input id="a1">
-<br><br>
-<button onclick="c1()">Trả lời</button>
-</div>
+<input id="answer" placeholder="Nhập câu trả lời...">
 
-<div id="q2" class="box">
-<p>Câu 2: Món em thích ăn nhất khi đi với anh?</p>
-<input id="a2">
-<br><br>
-<button onclick="c2()">Trả lời</button>
-</div>
+<br>
 
-<div id="q3" class="box">
-<p>Câu 3: Khi em giận anh thường làm gì để em hết giận?</p>
-<input id="a3">
-<br><br>
-<button onclick="c3()">Trả lời</button>
-</div>
+<button onclick="check()">Trả lời</button>
 
-<div id="q4" class="box">
-<p>Câu 4: Ai là người dễ thương nhất?</p>
-<input id="a4">
-<br><br>
-<button onclick="c4()">Trả lời</button>
-</div>
-
-<div id="card" class="card">
-<h3>🎉 Mở khóa thành công</h3>
-
-<p>
-Có vẻ anh hiểu em khá rõ rồi nhỉ.  
-Cảm ơn em vì đã luôn ở bên anh.
-</p>
-
-<p>
-Chúc em một ngày <b>8/3</b> thật vui vẻ 🌸  
-Luôn đáng yêu như hiện tại và hy vọng
-chúng ta sẽ có thêm thật nhiều kỷ niệm cùng nhau.
-</p>
-
-<p>❤️</p>
+<p id="message"></p>
 
 </div>
 
 <script>
 
-function start(){
-document.getElementById("start").style.display="none";
-document.getElementById("q1").style.display="block";
+let questions = [
+
+{
+q:"Câu 1: Ngày đầu tiên mình gặp nhau là ngày nào?",
+a:"15/08"
+},
+
+{
+q:"Câu 2: Món ăn mà em thích nhất khi đi với anh?",
+a:"lẩu"
+},
+
+{
+q:"Câu 3: Biệt danh anh hay gọi em là gì?",
+a:"bé"
+},
+
+{
+q:"Câu 4: Ai là người tỏ tình trước?",
+a:"anh"
+},
+
+{
+q:"Câu 5: Màu em thích nhất?",
+a:"hồng"
 }
 
-function c1(){
-if(document.getElementById("a1").value=="6"){
-document.getElementById("q1").style.display="none";
-document.getElementById("q2").style.display="block";
-}else{
-alert("Sai rồi 😜 thử lại xem");
-}
+];
+
+let current = 0;
+
+function loadQuestion(){
+document.getElementById("question").innerText = questions[current].q;
 }
 
-function c2(){
-if(document.getElementById("a2").value=="lẩu"){
-document.getElementById("q2").style.display="none";
-document.getElementById("q3").style.display="block";
+function check(){
+
+let user = document.getElementById("answer").value.toLowerCase();
+let correct = questions[current].a.toLowerCase();
+
+if(user === correct){
+
+current++;
+
+if(current < questions.length){
+
+document.getElementById("answer").value="";
+document.getElementById("message").innerText="Đúng rồi đó ❤️";
+loadQuestion();
+
 }else{
-alert("Sai rồi 😜");
-}
+
+document.querySelector(".box").innerHTML = `
+<h2>Chúc mừng em đã vượt qua hết câu hỏi ❤️</h2>
+<p>Điều đó chứng tỏ chúng ta hiểu nhau khá rõ đó nha.</p>
+<p>Chúc em một ngày 8/3 thật vui vẻ, luôn xinh đẹp và hạnh phúc.</p>
+<p>Anh thương em ❤️</p>
+`;
+
 }
 
-function c3(){
-if(document.getElementById("a3").value=="xin lỗi"){
-document.getElementById("q3").style.display="none";
-document.getElementById("q4").style.display="block";
 }else{
-alert("Sai rồi 😜");
-}
+
+document.getElementById("message").innerText="Sai rồi nha, thử lại đi 😜";
+
 }
 
-function c4(){
-if(document.getElementById("a4").value=="em"){
-document.getElementById("q4").style.display="none";
-document.getElementById("card").style.display="block";
-}else{
-alert("Sai rồi 😜");
 }
-}
+
+loadQuestion();
 
 </script>
 
